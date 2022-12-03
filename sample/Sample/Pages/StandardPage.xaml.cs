@@ -1,18 +1,15 @@
-﻿using System;
-using Acr.UserDialogs;
-using Samples.ViewModels;
+﻿using Acr.UserDialogs;
+using Sample.ViewModels;
 
+namespace Samples;
 
-namespace Samples
+public partial class StandardPage : ContentPage
 {
-    public partial class StandardPage : ContentPage
+    public StandardPage()
     {
-        public StandardPage()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            // the idea here is that you would dependency inject userdialogs
-            this.BindingContext = new StandardViewModel(UserDialogs.Instance);
-        }
+        // the idea here is that you would dependency inject userdialogs
+        BindingContext = new StandardViewModel(UserDialogs.Instance);
     }
 }

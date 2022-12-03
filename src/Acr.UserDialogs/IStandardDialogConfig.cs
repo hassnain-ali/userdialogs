@@ -1,11 +1,7 @@
-﻿using System;
+﻿namespace Acr.UserDialogs;
 
-
-namespace Acr.UserDialogs
+public interface IStandardDialogConfig
 {
-    public interface IStandardDialogConfig
-    {
-        string Title { get; set; }
-        string Message { get; set; }
-    }
+    string Title { get; set; }
+    string Message { get; set; }
 }

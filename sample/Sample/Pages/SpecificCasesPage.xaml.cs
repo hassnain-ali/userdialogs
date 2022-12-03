@@ -1,18 +1,16 @@
-﻿using System;
-using Acr.UserDialogs;
-using Samples.ViewModels;
+﻿using Acr.UserDialogs;
 
 
-namespace Samples
+using Sample.ViewModels;
+namespace Samples;
+
+public partial class SpecificCasesPage : ContentPage
 {
-    public partial class SpecificCasesPage : ContentPage
+    public SpecificCasesPage()
     {
-        public SpecificCasesPage()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            // the idea here is that you would dependency inject userdialogs
-            this.BindingContext = new SpecificCasesViewModel(UserDialogs.Instance);
-        }
+        // the idea here is that you would dependency inject userdialogs
+        BindingContext = new SpecificCasesViewModel(UserDialogs.Instance);
     }
 }

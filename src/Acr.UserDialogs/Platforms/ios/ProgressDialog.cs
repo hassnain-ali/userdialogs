@@ -1,137 +1,121 @@
-﻿using System;
-#if __IOS__
+﻿#if __IOS__
 using BigTed;
 #endif
 using UIKit;
 
 
-namespace Acr.UserDialogs
+namespace Acr.UserDialogs;
+
+
+public class ProgressDialog : IProgressDialog
 {
+    private readonly ProgressDialogConfig config;
 
-    public class ProgressDialog : IProgressDialog
+
+    public ProgressDialog(ProgressDialogConfig config)
     {
-        readonly ProgressDialogConfig config;
+        this.config = config;
+        title = config.Title;
+    }
 
 
-        public ProgressDialog(ProgressDialogConfig config)
+    #region IProgressDialog Members
+
+    private string title;
+    public virtual string Title
+    {
+        get { return title; }
+        set
         {
-            this.config = config;
-            this.title = config.Title;
-        }
-
-
-        #region IProgressDialog Members
-
-        string title;
-        public virtual string Title
-        {
-            get { return this.title; }
-            set
-            {
-                if (this.title == value)
-                    return;
-
-                this.title = value;
-                this.Refresh();
-            }
-        }
-
-
-        int percentComplete;
-        public virtual int PercentComplete
-        {
-            get { return this.percentComplete; }
-            set
-            {
-                if (this.percentComplete == value)
-                    return;
-
-                if (value > 100)
-                    this.percentComplete = 100;
-                else if (value < 0)
-                    this.percentComplete = 0;
-                else
-                    this.percentComplete = value;
-                this.Refresh();
-            }
-        }
-
-
-        public virtual bool IsShowing { get; private set; }
-
-
-        public virtual void Show()
-        {
-            this.IsShowing = true;
-            this.Refresh();
-        }
-
-
-        public virtual void Hide()
-        {
-            this.IsShowing = false;
-#if __IOS__
-            UIApplication.SharedApplication.InvokeOnMainThread(BTProgressHUD.Dismiss);
-#endif
-        }
-
-        #endregion
-
-        #region IDisposable Members
-
-        public virtual void Dispose()
-        {
-            this.Hide();
-        }
-
-        #endregion
-
-        #region Internals
-
-        protected virtual void Refresh()
-        {
-            if (!this.IsShowing)
+            if (title == value)
                 return;
 
-            var txt = this.Title;
-            float p = -1;
-            if (this.config.IsDeterministic)
-            {
-                p = (float)this.PercentComplete / 100;
-                if (!String.IsNullOrWhiteSpace(txt))
-                {
-                    txt += "... ";
-                }
-                txt += this.PercentComplete + "%";
-            }
+            title = value;
+            Refresh();
+        }
+    }
 
-            UIApplication.SharedApplication.InvokeOnMainThread(() =>
-            {
-                if (this.config.OnCancel == null)
-                {
+    private int percentComplete;
+    public virtual int PercentComplete
+    {
+        get { return percentComplete; }
+        set
+        {
+            if (percentComplete == value)
+                return;
+
+            percentComplete = value > 100 ? 100 : value < 0 ? 0 : value;
+            Refresh();
+        }
+    }
+
+
+    public virtual bool IsShowing { get; private set; }
+
+
+    public virtual void Show()
+    {
+        IsShowing = true;
+        Refresh();
+    }
+
+
+    public virtual void Hide()
+    {
+        IsShowing = false;
 #if __IOS__
-                    BTProgressHUD.Show(
-                        this.Title,
-                        p,
-                        this.config.MaskType.ToNative()
-                    );
+        UIApplication.SharedApplication.InvokeOnMainThread(BTProgressHUD.Dismiss);
 #endif
-                }
-                else
-                {
-#if __IOS__
-                    BTProgressHUD.Show(
-                        this.config.CancelText,
-                        this.config.OnCancel,
-                        txt,
-                        p,
-                        this.config.MaskType.ToNative()
-                    );
-#endif
-                }
-            });
+    }
+
+    #endregion
+
+    #region IDisposable Members
+
+    public virtual void Dispose()
+    {
+        Hide();
+    }
+
+    #endregion
+
+    #region Internals
+
+    protected virtual void Refresh()
+    {
+        if (!IsShowing)
+            return;
+
+        var txt = Title;
+        float p = -1;
+        if (config.IsDeterministic)
+        {
+            p = (float)PercentComplete / 100;
+            if (!string.IsNullOrWhiteSpace(txt))
+                txt += "... ";
+            txt += PercentComplete + "%";
         }
 
-#endregion
+        UIApplication.SharedApplication.InvokeOnMainThread(() =>
+        {
+            if (config.OnCancel == null)
+#if __IOS__
+                BTProgressHUD.Show(
+                    Title,
+                    p,
+                    config.MaskType.ToNative()
+                );
+            else
+                BTProgressHUD.Show(
+                    config.CancelText,
+                    config.OnCancel,
+                    txt,
+                    p,
+                    config.MaskType.ToNative()
+                );
+#endif
+        });
     }
+    #endregion
+
 }

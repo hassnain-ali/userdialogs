@@ -1,18 +1,15 @@
-﻿using System;
-using Acr.UserDialogs;
-using Samples.ViewModels;
+﻿using Acr.UserDialogs;
+using Sample.ViewModels;
 
+namespace Samples;
 
-namespace Samples
+public partial class SettingsPage : ContentPage
 {
-    public partial class SettingsPage : ContentPage
+    public SettingsPage()
     {
-        public SettingsPage()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            // the idea here is that you would dependency inject userdialogs
-            this.BindingContext = new SettingsViewModel(UserDialogs.Instance);
-        }
+        // the idea here is that you would dependency inject userdialogs
+        BindingContext = new SettingsViewModel(UserDialogs.Instance);
     }
 }

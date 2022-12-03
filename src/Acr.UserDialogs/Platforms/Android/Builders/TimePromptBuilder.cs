@@ -1,52 +1,50 @@
-using System;
+﻿using System;
 using Android.App;
 using Android.Text.Format;
 using Android.Widget;
 using Java.Lang;
 
 
-namespace Acr.UserDialogs.Builders
+namespace Acr.UserDialogs.Builders;
+
+public static class TimePromptBuilder
 {
-    public static class TimePromptBuilder
+    [Obsolete]
+    public static Dialog Build(Activity activity, TimePromptConfig config)
     {
-        public static Dialog Build(Activity activity, TimePromptConfig config)
+        var picker = new TimePicker(activity);
+        var builder = new AlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
+            .SetCancelable(false)
+            .SetTitle(config.Title)
+            .SetView(picker);
+
+        if (config.SelectedTime != null)
         {
-            var picker = new TimePicker(activity);
-            var builder = new AlertDialog.Builder(activity, config.AndroidStyleId ?? 0)
-                .SetCancelable(false)
-                .SetTitle(config.Title)
-                .SetView(picker);
+            picker.CurrentHour = new Integer(config.SelectedTime.Value.Hours);
+            picker.CurrentMinute = new Integer(config.SelectedTime.Value.Minutes);
+        }
 
-            if (config.SelectedTime != null)
-            {
-                picker.CurrentHour = new Integer(config.SelectedTime.Value.Hours);
-                picker.CurrentMinute = new Integer(config.SelectedTime.Value.Minutes);
-            }
+        var is24Hour = config.Use24HourClock ?? DateFormat.Is24HourFormat(activity);
+        picker.SetIs24HourView(new Java.Lang.Boolean(is24Hour));
 
-            var is24Hour = config.Use24HourClock ?? DateFormat.Is24HourFormat (activity);
-            picker.SetIs24HourView(new Java.Lang.Boolean(is24Hour));
-
-            if (config.IsCancellable)
-            {
-                builder.SetNegativeButton(
-                    config.CancelText,
-                    (sender, args) =>
-                    {
-                        var ts = new TimeSpan(0, picker.CurrentHour.IntValue(), picker.CurrentMinute.IntValue(), 0);
-                        config.OnAction?.Invoke(new TimePromptResult(false, ts));
-                    }
-                );
-            }
-            builder.SetPositiveButton(
-                config.OkText,
+        if (config.IsCancellable)
+            _ = builder.SetNegativeButton(
+                config.CancelText,
                 (sender, args) =>
                 {
                     var ts = new TimeSpan(0, picker.CurrentHour.IntValue(), picker.CurrentMinute.IntValue(), 0);
-                    config.OnAction?.Invoke(new TimePromptResult(true, ts));
+                    config.OnAction?.Invoke(new TimePromptResult(false, ts));
                 }
             );
+        _ = builder.SetPositiveButton(
+            config.OkText,
+            (sender, args) =>
+            {
+                var ts = new TimeSpan(0, picker.CurrentHour.IntValue(), picker.CurrentMinute.IntValue(), 0);
+                config.OnAction?.Invoke(new TimePromptResult(true, ts));
+            }
+        );
 
-            return builder.Show();
-        }
+        return builder.Show();
     }
 }

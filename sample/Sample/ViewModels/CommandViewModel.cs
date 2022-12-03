@@ -1,12 +1,9 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
+namespace Sample.ViewModels;
 
-namespace Samples.ViewModels
+public class CommandViewModel
 {
-    public class CommandViewModel
-    {
-        public string Text { get; set; }
-        public ICommand Command { get; set; }
-    }
+    public string Text { get; set; }
+    public ICommand Command { get; set; }
 }

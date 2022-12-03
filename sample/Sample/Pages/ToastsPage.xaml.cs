@@ -1,18 +1,15 @@
-﻿using System;
-using Acr.UserDialogs;
-using Samples.ViewModels;
+﻿using Acr.UserDialogs;
+using Sample.ViewModels;
 
+namespace Samples;
 
-namespace Samples
+public partial class ToastsPage : ContentPage
 {
-    public partial class ToastsPage : ContentPage
+    public ToastsPage()
     {
-        public ToastsPage()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            // the idea here is that you would dependency inject userdialogs
-            this.BindingContext = new ToastsViewModel(UserDialogs.Instance);
-        }
+        // the idea here is that you would dependency inject userdialogs
+        BindingContext = new ToastsViewModel(UserDialogs.Instance);
     }
 }

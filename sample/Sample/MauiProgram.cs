@@ -17,12 +17,11 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
             .ConfigureLifecycleEvents(events =>
-            {
 #if ANDROID
-                events.AddAndroid(android => android.OnApplicationCreate(app => UserDialogs.Init(app)));
+                events.AddAndroid(android => android.OnApplicationCreate(app => UserDialogs.Init(app))));
+#else
+            { });
 #endif
-            });
-
         return builder.Build();
     }
 }

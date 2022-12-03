@@ -1,10 +1,9 @@
-﻿namespace Acr.UserDialogs
+﻿namespace Acr.UserDialogs;
+
+public enum iOSPickerStyle
 {
-    public enum iOSPickerStyle
-    {
-        Auto,
-        Inline,
-        Wheels,
-        Compact
-    }
+    Auto,
+    Inline,
+    Wheels,
+    Compact
 }

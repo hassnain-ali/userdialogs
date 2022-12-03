@@ -1,11 +1,7 @@
-﻿using System;
+﻿namespace Acr.UserDialogs;
 
-
-namespace Acr.UserDialogs
+public interface IStandardDialogResult<T>
 {
-    public interface IStandardDialogResult<T>
-    {
-        bool Ok { get; }
-        T Value { get; }
-    }
+    bool Ok { get; }
+    T Value { get; }
 }

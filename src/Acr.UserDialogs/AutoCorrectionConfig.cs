@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Acr.UserDialogs;
 
-namespace Acr.UserDialogs
+public enum AutoCorrectionConfig
 {
-    public enum AutoCorrectionConfig
-    {
-        Default,
-        No,
-        Yes
-    }
+    Default,
+    No,
+    Yes
 }

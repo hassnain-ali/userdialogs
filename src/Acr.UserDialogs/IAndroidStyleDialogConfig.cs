@@ -1,7 +1,6 @@
-﻿namespace Acr.UserDialogs
+﻿namespace Acr.UserDialogs;
+
+public interface IAndroidStyleDialogConfig
 {
-    public interface IAndroidStyleDialogConfig
-    {
-        int? AndroidStyleId { get; set; }
-    }
+    int? AndroidStyleId { get; set; }
 }

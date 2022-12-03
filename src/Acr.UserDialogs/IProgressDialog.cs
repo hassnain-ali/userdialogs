@@ -1,16 +1,15 @@
 ﻿using System;
 
 
-namespace Acr.UserDialogs
+namespace Acr.UserDialogs;
+
+
+public interface IProgressDialog : IDisposable
 {
+    string Title { get; set; }
+    int PercentComplete { get; set; }
+    bool IsShowing { get; }
 
-    public interface IProgressDialog : IDisposable
-    {
-        string Title { get; set; }
-        int PercentComplete { get; set; }
-        bool IsShowing { get; }
-
-        void Show();
-        void Hide();
-    }
+    void Show();
+    void Hide();
 }

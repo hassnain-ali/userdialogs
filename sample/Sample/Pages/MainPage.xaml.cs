@@ -1,13 +1,9 @@
-﻿using System;
+﻿namespace Samples;
 
-
-namespace Samples
+public partial class MainPage : TabbedPage
 {
-    public partial class MainPage : TabbedPage
+    public MainPage()
     {
-        public MainPage()
-        {
-            this.InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,23 +1,22 @@
 ﻿using System;
 
 
-namespace Acr.UserDialogs
+namespace Acr.UserDialogs;
+
+public class DisposableAction : IDisposable
 {
-    public class DisposableAction : IDisposable
+    private readonly Action action;
+
+
+    public DisposableAction(Action action)
     {
-        readonly Action action;
+        this.action = action;
+    }
 
 
-        public DisposableAction(Action action)
-        {
-            this.action = action;
-        }
-
-
-        public void Dispose()
-        {
-            this.action();
-            GC.SuppressFinalize(this);
-        }
+    public void Dispose()
+    {
+        action();
+        GC.SuppressFinalize(this);
     }
 }

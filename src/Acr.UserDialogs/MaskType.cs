@@ -1,12 +1,9 @@
-﻿using System;
+﻿namespace Acr.UserDialogs;
 
-
-namespace Acr.UserDialogs {
-
-    public enum MaskType {
-        Black,
-        Gradient,
-        Clear,
-        None
-    }
+public enum MaskType
+{
+    Black,
+    Gradient,
+    Clear,
+    None
 }

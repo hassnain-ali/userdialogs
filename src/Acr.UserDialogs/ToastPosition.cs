@@ -1,11 +1,7 @@
-﻿using System;
+﻿namespace Acr.UserDialogs;
 
-
-namespace Acr.UserDialogs
+public enum ToastPosition
 {
-    public enum ToastPosition
-    {
-        Top,
-        Bottom
-    }
+    Top,
+    Bottom
 }

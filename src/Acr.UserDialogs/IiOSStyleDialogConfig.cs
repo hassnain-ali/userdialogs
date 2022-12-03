@@ -1,7 +1,6 @@
-﻿namespace Acr.UserDialogs
+﻿namespace Acr.UserDialogs;
+
+public interface IiOSStyleDialogConfig
 {
-    public interface IiOSStyleDialogConfig
-    {
-        iOSPickerStyle? iOSPickerStyle { get; set; }
-    }
+    iOSPickerStyle? iOSPickerStyle { get; set; }
 }

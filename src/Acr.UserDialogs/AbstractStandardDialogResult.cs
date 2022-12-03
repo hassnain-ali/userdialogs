@@ -1,19 +1,15 @@
-﻿using System;
+﻿namespace Acr.UserDialogs;
 
-
-namespace Acr.UserDialogs
+public abstract class AbstractStandardDialogResult<T> : IStandardDialogResult<T>
 {
-    public abstract class AbstractStandardDialogResult<T> : IStandardDialogResult<T>
+
+    protected AbstractStandardDialogResult(bool ok, T value)
     {
-
-        protected AbstractStandardDialogResult(bool ok, T value)
-        {
-            this.Ok = ok;
-            this.Value = value;
-        }
-
-
-        public bool Ok { get; }
-        public T Value { get; }
+        Ok = ok;
+        Value = value;
     }
+
+
+    public bool Ok { get; }
+    public T Value { get; }
 }
